@@ -10,9 +10,9 @@ const Navbar = () => {
         <h1>MovieManiac</h1>
 
         <div className="navbar_links">
-            <a href="">Popular <img src={Fire} alt="fire emoji" className="navbar_emoji"/></a>
-            <a href="">Top Rate <img src={Star} alt="star emoji" className="navbar_emoji"/></a>
-            <a href="">Upcoming <img src={Party} alt="party emoji" className="navbar_emoji"/></a>
+            <a href="">Home <img src={Fire} alt="fire emoji" className="navbar_emoji"/></a>
+            <a href="">Overons <img src={Star} alt="star emoji" className="navbar_emoji"/></a>
+            <a href="">Login/register <img src={Party} alt="party emoji" className="navbar_emoji"/></a>
         </div>
 
     </nav>
