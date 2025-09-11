@@ -1,30 +1,39 @@
-.movie_list_header{
+/* .movie_list_header {
     padding: 10px 30px;
     justify-content: space-between;
     margin-bottom: 5px;
+} */
+.movie_list_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* لضبط المحاذاة بشكل صحيح */
+  padding: 10px 30px;
+  margin-bottom: 5px;
 }
 
-.movie_list_heading{
+
+.movie_list_heading {
 
     font-size: 26px;
     color: #ffe400;
 }
 
-.movie_filter{
+.movie_filter {
     list-style: none;
     font-size: 16px;
 }
 
-.movie_filter_item{
+.movie_filter_item {
     padding: 5px 10px;
     cursor: pointer;
 }
-.movie_filter_item.active{
+
+.movie_filter_item.active {
     border-bottom: 1px solid #e6e6e6;
     font-weight: 500;
 }
 
-.movie_sorting{
+.movie_sorting {
     border: none;
     outline: none;
     border-radius: 5px;
@@ -36,10 +45,16 @@
     margin: 0 10px;
 }
 
-.movie_cards{
-display: flex;
-flex-wrap: wrap;
-justify-content: space-evenly;
+/* .movie_cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+} */
 
+.movie_cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* هذا سيجعل الأعمدة تتكيف حسب حجم الشاشة */
+  gap: 20px; /* المسافة بين الأفلام */
+  padding: 20px;
 }
 
