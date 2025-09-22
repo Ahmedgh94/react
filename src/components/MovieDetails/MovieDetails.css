@@ -1,0 +1,63 @@
+.movie_details_page {
+  padding: 20px 30px;
+}
+
+.details_header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.back_link {
+  color: #ffe400;
+  text-decoration: none;
+}
+
+.title {
+  color: #ffe400;
+  margin: 0;
+}
+
+.details_body {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.poster_large {
+  width: 220px;
+  height: 330px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.meta p {
+  margin: 6px 0;
+}
+
+.overview {
+  margin-top: 10px;
+  color: #ddd;
+}
+
+.comments_section {
+  margin-top: 24px;
+}
+
+.login-hint {
+  color: #cfcfcf;
+  font-size: 14px;
+  margin: 8px 0 12px;
+}
+
+.linklike {
+  background: none;
+  border: none;
+  color: #ffe400;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font: inherit;
+}

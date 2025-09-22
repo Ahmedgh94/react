@@ -1,28 +1,54 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import React from 'react'
-import './App.css'
-import Navbar from './components/Navbar/Navbar'
-import Movielist from './components/Movielist/Movielist'
-import Overons from './components/Overpage/Overons';
-import Login_signup from './components/Login/Login_signup';
-
-
-
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // استخدام Router هنا
+import Movielist from "./components/Movielist/Movielist";
+import MovieDetails from "./components/MovieDetails/MovieDetails";
+import Login_signup from "./components/Login/Login_signup";
+import Overons from "./components/Overpage/Overons";
+import Navbar from "./components/Navbar/Navbar";
+import "./App.css";
 
 const App = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("movieapp_user");
+    if (saved) {
+      try {
+        setUser(JSON.parse(saved));
+      } catch {}
+    }
+  }, []);
+
+  const handleAuthSuccess = (loggedUser) => {
+    setUser(loggedUser);
+    localStorage.setItem("movieapp_user", JSON.stringify(loggedUser));
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem("movieapp_user");
+  };
+
   return (
-    <div className='app'>
-      <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Movielist />} />
-        <Route path="/Overons" element={<Overons />} />
-        <Route path="/Login" element={<Login_signup />} />
-      </Routes>
-    </Router>
+    <Router>
+      <div className="app">
+        <Navbar
+          user={user}
+          onLogout={handleLogout}
+        />
 
-    </div>
-  )
-}
+        <Routes>
+          <Route path="/" element={<Movielist />} />
+          <Route
+            path="/movie/:id"
+            element={<MovieDetails user={user} />}
+          />
+          <Route path="/Login" element={<Login_signup onAuth={handleAuthSuccess} />} />
+          <Route path="/Overons" element={<Overons />} />
+        </Routes>
+      </div>
+    </Router> 
+  );
+};
 
-export default App
+export default App;
