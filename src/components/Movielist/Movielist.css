@@ -69,12 +69,16 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  
+  
 }
 
 .auth-btn {
-  border: 1px solid #e6e6e6;
+  border: 1px solid#ffe400;
+
   background: transparent;
-  color: #fff;
+    color: #ffe400;
+
   padding: 6px 12px;
   border-radius: 8px;
   cursor: pointer;

@@ -1,0 +1,109 @@
+/* ---------- Home Page Layout ---------- */
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: #1c1c1c;
+  color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* ---------- Movies Section ---------- */
+.movies-section {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem 1rem;
+}
+
+/* ---------- Section Header ---------- */
+.section-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, #0d0d0d 0%, #111 40%, #111 60%, #0d0d0d 100%);
+  padding: 0.8rem 0;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid yellow;
+}
+
+/* Subtiele filmstrip aan zijkanten */
+.section-header::before,
+.section-header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 35px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.05) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  opacity: 0.25;
+}
+.section-header::before {
+  left: 0;
+}
+.section-header::after {
+  right: 0;
+}
+
+/* Titelstijl */
+.section-header h2 {
+  color: yellow;
+  font-size: 1.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+  margin: 0;
+}
+
+/* ---------- Movie Grid ---------- */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+/* ---------- Loading Text ---------- */
+.movies-grid p {
+  color: #aaa;
+  text-align: center;
+  font-size: 1rem;
+  grid-column: 1 / -1;
+}
+
+/* ---------- Responsive Adjustments ---------- */
+@media (max-width: 1024px) {
+  .movies-section {
+    padding: 1.5rem;
+  }
+  .section-header h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-header h2 {
+    font-size: 1.4rem;
+  }
+  .movies-grid {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .movies-section {
+    padding: 1rem;
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+  }
+}

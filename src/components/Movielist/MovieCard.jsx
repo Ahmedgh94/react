@@ -1,33 +1,35 @@
-import React from 'react'
-import './MovieCard.css'
-import Star from '../../assets/star.png'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './MovieCard.css';
 
-const MovieCard = ({movie}) => {
+const MovieCard = ({ movie }) => {
+  const posterUrl = movie.poster_url
+    ? `http://localhost:8000/assets/${movie.poster_url.split('/').pop()}`
+    : 'https://via.placeholder.com/200x300?text=No+Image';
+
   return (
-    <a href={`http://localhost:5000/movies/${movie.id}`}  target='_blank'
-    className='movie_card'>
-        <img 
-        src={`https://m.media-amazon.com/images/I/91b3Xtjt0IL._UF1000,1000_QL80_.jpg`}
-        alt='movie_poster' 
-        className='movie_poster' 
-        />
+    <Link
+      to={`/movie/${movie.id}`} // ✅ React-router link naar details
+      className='movie_card'
+    >
+      <img
+        src={posterUrl}
+        alt={movie.title}
+        className='movie_poster'
+      />
 
-        <div className="movie_details">
-          <h3 className="movie_details_heading">{movie.original_title}</h3>
-          <div className="align_center movie_date_rate">
-            <p>{movie.release_date}</p>
-            <p>{movie.Vote_average} <img src={Star} alt="rating icon" 
-            className='card-emoji'/></p>
-
-          </div>
-
-          <p className='movie_description'>
-            {movie.overview.slice(0, 100)+ "..."}
-          </p>
+      <div className='movie_details'>
+        <h3 className='movie_details_heading'>{movie.title}</h3>
+        <div className='align_center movie_date_rate'>
+          <p>{movie.year}</p>
+         
         </div>
-    </a>
+        <p className='movie_description'>
+          {movie.description || (movie.overview ? movie.overview.slice(0, 100) + '...' : 'No description available')}
+        </p>
+      </div>
+    </Link>
+  );
+};
 
-  )
-}
-
-export default MovieCard
+export default MovieCard;

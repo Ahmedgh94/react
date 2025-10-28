@@ -12,10 +12,10 @@ const Navbar = ({ user, onLoginClick, onLogout }) => {
 
       <div className="navbar_links">
         <Link to="/">
-          Home <img src={Fire} alt="fire emoji" className="navbar_emoji" />
+          Home 
         </Link>
         <Link to="/Overons">
-          Overons <img src={Star} alt="star emoji" className="navbar_emoji" />
+          Overons  
         </Link>
 
         {/* If the user is logged in, show "Logout" */}
@@ -26,7 +26,7 @@ const Navbar = ({ user, onLoginClick, onLogout }) => {
         ) : (
           <Link to="/Login">
             <button className="auth-btn">
-              Login / Register <img src={Party} alt="party emoji" className="navbar_emoji" />
+              Login / Register  
             </button>
           </Link>
         )}

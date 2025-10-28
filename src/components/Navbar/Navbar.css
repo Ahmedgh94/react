@@ -23,10 +23,7 @@ font-weight: 500;
 color: #fff;
 text-decoration: none;
 padding: 0 15px;
+    color: #ffe400;
+
 }
 
-.navbar_emoji{
-    width: 25px;
-    height: 25px;
-    margin-left: 7px;
-}

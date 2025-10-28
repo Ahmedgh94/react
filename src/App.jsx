@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // استخدام Router هنا
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home/Home";
 import Movielist from "./components/Movielist/Movielist";
 import MovieDetails from "./components/MovieDetails/MovieDetails";
 import Login_signup from "./components/Login/Login_signup";
@@ -32,22 +33,21 @@ const App = () => {
   return (
     <Router>
       <div className="app">
-        <Navbar
-          user={user}
-          onLogout={handleLogout}
-        />
+        <Navbar user={user} onLogout={handleLogout} />
 
         <Routes>
-          <Route path="/" element={<Movielist />} />
-          <Route
-            path="/movie/:id"
-            element={<MovieDetails user={user} />}
-          />
-          <Route path="/Login" element={<Login_signup onAuth={handleAuthSuccess} />} />
-          <Route path="/Overons" element={<Overons />} />
+          {/* ✅ Home is nu de hoofdpagina */}
+          <Route path="/" element={<Home />} />
+
+          {/* Movie lijst (optioneel op /movies) */}
+          <Route path="/movies" element={<Movielist />} />
+
+          <Route path="/movie/:id" element={<MovieDetails user={user} />} />
+          <Route path="/login" element={<Login_signup onAuth={handleAuthSuccess} />} />
+          <Route path="/overons" element={<Overons />} />
         </Routes>
       </div>
-    </Router> 
+    </Router>
   );
 };
 
