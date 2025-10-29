@@ -1,60 +1,73 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // استيراد useNavigate
-import './login_signup.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./login_signup.css";
 
 const Login_signup = ({ onAuth }) => {
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPass, setConfirmPass] = useState('');
-  const navigate = useNavigate(); // استخدام useNavigate للتوجيه بعد تسجيل الدخول
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isLoginMode) {
-      // 📌 Login Mode
-      const response = await fetch("http://localhost:5000/users");
-      const users = await response.json();
+    try {
+      if (isLoginMode) {
+        // 🔐 LOGIN
+        const response = await fetch("http://localhost:8000/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
 
-      const user = users.find(
-        (u) => u.email === email && u.password === password
-      );
+        const data = await response.json();
 
-      if (user) {
-        alert("✅ Login successful");
-        onAuth(user); // We send the user info to the father(App or Movielist)
-        navigate("/"); // التوجيه إلى الصفحة الرئيسية بعد تسجيل الدخول
+        if (response.ok) {
+          // Bewaar token in localStorage
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+
+          alert("✅ Login succesvol!");
+          onAuth(data.user);
+          navigate("/");
+        } else {
+          alert(data.message || "❌ Ongeldige inloggegevens");
+        }
       } else {
-        alert("❌ Invalid email or password");
-      }
-    } else {
-      // 📌 Signup Mode
-      if (password !== confirmPass) {
-        alert("❌ Passwords do not match");
-        return;
-      }
+        // 📝 SIGNUP
+        if (password !== confirmPass) {
+          alert("❌ Wachtwoorden komen niet overeen");
+          return;
+        }
 
-      const newUser = { name, email, password };
+        const response = await fetch("http://localhost:8000/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        });
 
-      const response = await fetch("http://localhost:5000/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUser),
-      });
+        const data = await response.json();
 
-      if (response.ok) {
-        const _savedUser = await response.json();
-        alert("✅ Signup successful, you can login now!");
-        setIsLoginMode(true); // العودة إلى وضع تسجيل الدخول
-        setName('');
-        setEmail('');
-        setPassword('');
-        setConfirmPass('');
-      } else {
-        alert("❌ Error while signing up");
+        if (response.ok) {
+          alert("✅ Registratie succesvol! Je kunt nu inloggen.");
+          setIsLoginMode(true);
+          setName("");
+          setEmail("");
+          setPassword("");
+          setConfirmPass("");
+        } else {
+          alert(data.message || "❌ Er ging iets mis bij registratie");
+        }
       }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("⚠️ Serverfout — controleer je API");
     }
   };
 
@@ -67,13 +80,13 @@ const Login_signup = ({ onAuth }) => {
       <div className="form-toggle">
         <button
           onClick={() => setIsLoginMode(true)}
-          className={`toggle-btn ${isLoginMode ? 'active' : ''}`}
+          className={`toggle-btn ${isLoginMode ? "active" : ""}`}
         >
           Login
         </button>
         <button
           onClick={() => setIsLoginMode(false)}
-          className={`toggle-btn ${!isLoginMode ? 'active' : ''}`}
+          className={`toggle-btn ${!isLoginMode ? "active" : ""}`}
         >
           Signup
         </button>
@@ -83,7 +96,7 @@ const Login_signup = ({ onAuth }) => {
         {!isLoginMode && (
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Naam"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -92,7 +105,7 @@ const Login_signup = ({ onAuth }) => {
 
         <input
           type="email"
-          placeholder="Email address"
+          placeholder="E-mailadres"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -100,7 +113,7 @@ const Login_signup = ({ onAuth }) => {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Wachtwoord"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -109,17 +122,11 @@ const Login_signup = ({ onAuth }) => {
         {!isLoginMode && (
           <input
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Bevestig wachtwoord"
             value={confirmPass}
             onChange={(e) => setConfirmPass(e.target.value)}
             required
           />
-        )}
-
-        {isLoginMode && (
-          <div>
-            <p>Forgot Password?</p>
-          </div>
         )}
 
         <button type="submit" className="submit-btn">
@@ -127,7 +134,9 @@ const Login_signup = ({ onAuth }) => {
         </button>
 
         <p className="switch-text">
-          {isLoginMode ? "Don't have an account?" : "Already have an account?"}
+          {isLoginMode
+            ? "Nog geen account?"
+            : "Heb je al een account?"}
           <a
             href="#"
             onClick={(e) => {
@@ -135,7 +144,7 @@ const Login_signup = ({ onAuth }) => {
               setIsLoginMode(!isLoginMode);
             }}
           >
-            {isLoginMode ? " Signup now" : " Login"}
+            {isLoginMode ? " Registreer nu" : " Log in"}
           </a>
         </p>
       </form>

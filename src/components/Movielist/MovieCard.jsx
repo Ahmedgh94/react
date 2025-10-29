@@ -7,6 +7,13 @@ const MovieCard = ({ movie }) => {
     ? `http://localhost:8000/assets/${movie.poster_url.split('/').pop()}`
     : 'https://via.placeholder.com/200x300?text=No+Image';
 
+  // ✂️ Omschrijving beperken tot 5 woorden
+  const shortenDescription = (text) => {
+    if (!text) return 'Geen beschrijving beschikbaar';
+    const words = text.split(' ');
+    return words.length > 5 ? words.slice(0, 5).join(' ') + '...' : text;
+  };
+
   return (
     <Link
       to={`/movie/${movie.id}`} // ✅ React-router link naar details
@@ -22,10 +29,9 @@ const MovieCard = ({ movie }) => {
         <h3 className='movie_details_heading'>{movie.title}</h3>
         <div className='align_center movie_date_rate'>
           <p>{movie.year}</p>
-         
         </div>
         <p className='movie_description'>
-          {movie.description || (movie.overview ? movie.overview.slice(0, 100) + '...' : 'No description available')}
+          {shortenDescription(movie.description || movie.overview)}
         </p>
       </div>
     </Link>

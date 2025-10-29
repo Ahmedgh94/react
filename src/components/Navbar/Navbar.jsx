@@ -1,33 +1,30 @@
 import React from "react";
 import "./Navbar.css";
-import Fire from "../../assets/fire.png";
-import Star from "../../assets/glowing-star.png";
-import Party from "../../assets/partying-face.png";
 import { Link } from "react-router-dom";
 
-const Navbar = ({ user, onLoginClick, onLogout }) => {
+const Navbar = ({ user, onLogout }) => {
   return (
     <nav className="navbar">
-      <h1>MovieReview</h1>
+      <h1 className="logo">MovieReview</h1>
 
       <div className="navbar_links">
-        <Link to="/">
-          Home 
-        </Link>
-        <Link to="/Overons">
-          Overons  
-        </Link>
+        <Link to="/">Home</Link>
+        <Link to="/overons">Over ons</Link>
 
-        {/* If the user is logged in, show "Logout" */}
+        {/* 🔐 Alleen admin ziet "Film toevoegen" */}
+        {user?.is_admin && (
+          <Link to="/add-movie" className="add-movie-link">
+            ➕ Film toevoegen
+          </Link>
+        )}
+
         {user ? (
           <button className="auth-btn" onClick={onLogout}>
-            Logout
+            Logout ({user.name})
           </button>
         ) : (
-          <Link to="/Login">
-            <button className="auth-btn">
-              Login / Register  
-            </button>
+          <Link to="/login">
+            <button className="auth-btn">Login / Register</button>
           </Link>
         )}
       </div>
